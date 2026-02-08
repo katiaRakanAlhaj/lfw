@@ -23048,8 +23048,10 @@ const wR = (e) => {
                   children: [
                     m.jsx(Rs, {
                       to: `/${r}/`,
-                      children: m.jsx("img", {
-                        className: "w-[10em]",
+                      children: m.jsx("img", {  
+                        style:{
+                          width:'11.9rem'
+                        },
                         src:
                           (s = e == null ? void 0 : e.data) == null
                             ? void 0
@@ -23057,7 +23059,10 @@ const wR = (e) => {
                       }),
                     }),
                     m.jsx("p", {
-                      className: "text-[0.9em] text-[#FFFFFF] mt-1",
+                      className: "text-[#FFFFFF] mt-1",
+                      style:{
+                      fontSize:'1rem'
+                      },
                       children: Z.t("Diplomat · Politician · Writer"),
                     }),
                   ],
@@ -25576,7 +25581,7 @@ const tM = async () => (await ft.get("/footer")).data || [],
       className: "w-full lg:h-[100vh] h-[20em] relative",
       children: [
         m.jsx("div", {
-          className: "absolute w-full h-full bg-cover bg-center",
+          className: "absolute w-full h-full bg-cover",
           style: {
             backgroundImage: `url(${(o = e == null ? void 0 : e.data) == null ? void 0 : o.banner})`,
           },
@@ -38686,11 +38691,10 @@ const qn = () => {
       className: `w-full relative flex items-center justify-center text-center ${s}`,
       children: [
         m.jsx("div", {
-          className: `absolute ${o ? "lg:rounded-3xl" : ""} w-full h-full bg-cover bg-center -z-10 transition-all duration-700`,
+          className: `absolute ${o ? "lg:rounded-3xl" : ""} w-full h-full bg-cover  -z-10 transition-all duration-700`,
           style: {
             backgroundImage: `${i}, url(${e})`,
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
           },
         }),
         m.jsxs("div", {
@@ -41052,11 +41056,10 @@ const Pk = ({ content: e }) => {
       className: `w-full relative ${s}`,
       children: [
         m.jsx("div", {
-          className: `absolute ${o ? "rounded-3xl" : ""} w-full h-full bg-cover bg-center -z-10 transition-all duration-700`,
+          className: `absolute ${o ? "rounded-3xl" : ""} w-full h-full bg-cover -z-10 transition-all duration-700`,
           style: {
             backgroundImage: `${i}, url(${e})`,
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
           },
         }),
         m.jsxs("div", {
