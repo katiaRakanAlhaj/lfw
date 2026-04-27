@@ -22535,7 +22535,7 @@ const tN = (e = {}) => {
   zN = "upload",
   UN = "Load more",
   DN = "Filter and Sort",
-  kN = "Filter by",
+  kN = "Interview Classification",
   HN = "Sort by",
   FN = "Apply the filter",
   BN = "Reset",
@@ -22615,6 +22615,9 @@ const tN = (e = {}) => {
     Email: IN,
     social_media: $N,
     "Download CV (PDF)": "Download CV (PDF)",
+    "video_language":"interview language",
+    "apply":"applying...",
+    "no_videos_found":"no videos found",
     activities: ZN,
     Sections: GN,
     latest_activites: YN,
@@ -22686,7 +22689,7 @@ const tN = (e = {}) => {
   qO = "تحميل",
   IO = "تحميل المزيد",
   $O = "تصفية و ترتيب",
-  ZO = "تصفية حسب",
+  ZO = "تصنيف المقابلة",
   GO = "رتب حسب",
   YO = "تطبيق الفلتر",
   QO = "إعادة تعيين",
@@ -22759,12 +22762,15 @@ const tN = (e = {}) => {
     reset: QO,
     contact_us: KO,
     "We are always ready to help you and answer your questions":
-      "نحن دائما على استعداد لمساعدتك والإجابة على أسئلتك",
+      "نحن دائما على استعداد للتواصل والإجابة على أسئلتك",
     our_website: XO,
     my_phone_number: JO,
     Email: WO,
     social_media: eR,
     "Download CV (PDF)": "تحميل السيرة الذاتية (PDF)",
+    "video_language":"لغة المقابلة",
+    "apply":"تطبيق...",
+    "no_videos_found":"لايوجد فيديوهات",
     activities: tR,
     Sections: nR,
     latest_activites: rR,
@@ -23048,8 +23054,10 @@ const wR = (e) => {
                   children: [
                     m.jsx(Rs, {
                       to: `/${r}/`,
-                      children: m.jsx("img", {
-                        className: "w-[10em]",
+                      children: m.jsx("img", {  
+                        style:{
+                          width:'11.9rem'
+                        },
                         src:
                           (s = e == null ? void 0 : e.data) == null
                             ? void 0
@@ -23057,7 +23065,10 @@ const wR = (e) => {
                       }),
                     }),
                     m.jsx("p", {
-                      className: "text-[0.9em] text-[#FFFFFF] mt-1",
+                      className: "text-[#FFFFFF] mt-1",
+                      style:{
+                      fontSize:'1rem'
+                      },
                       children: Z.t("Diplomat · Politician · Writer"),
                     }),
                   ],
@@ -25576,7 +25587,7 @@ const tM = async () => (await ft.get("/footer")).data || [],
       className: "w-full lg:h-[100vh] h-[20em] relative",
       children: [
         m.jsx("div", {
-          className: "absolute w-full h-full bg-cover bg-center",
+          className: "absolute w-full h-full bg-cover",
           style: {
             backgroundImage: `url(${(o = e == null ? void 0 : e.data) == null ? void 0 : o.banner})`,
           },
@@ -27429,179 +27440,180 @@ const bg = ({ title: e }) =>
       }),
     ],
   }),
-  UM = ({ homePageData: e, videoData: t }) => {
+UM = ({ homePageData: e, videoData: t }) => {
     var h, v;
     const [r, i] = O.useState(null),
-      [s, o] = O.useState(!1),
-      c = (y) => {
+      [s, o] = O.useState(false);
+    
+    // Function to extract YouTube video ID from URL
+    const c = (y) => {
         try {
-          const S =
-            /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/,
-            x = y.match(S);
-          return x ? x[1] : null;
+            const S = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+            const x = y.match(S);
+            return x ? x[1] : null;
         } catch (S) {
-          return (console.error("Error extracting YouTube ID:", S), null);
+            console.error("Error extracting YouTube ID:", S);
+            return null;
         }
-      },
-      d = (y) => c(y) !== null,
-      f = (y) => {
+    };
+    
+    // Function to check if URL is a YouTube video
+    const d = (y) => c(y) !== null;
+    
+    // Function to handle video click
+    const f = (y) => {
         i(y);
-      };
+    };
+    
+    // Function to stop video when mouse leaves
+    const stopVideo = () => {
+        i(null);
+    };
+    
+    // Get the videos array - works with your API response structure
+    const videos = Array.isArray(t) ? t : (t?.data || []);
+    
+    // Optional: Add debug log to see what's being received
+    console.log("Video data received:", t);
+    console.log("Videos array length:", videos.length);
+    
     return m.jsxs("div", {
-      className: "mt-[4em]",
-      children: [
-        m.jsx(bg, { title: Z.t("Media") }),
-        m.jsx("div", {
-          className: "flex items-center justify-center mt-4",
-          children: m.jsx("p", {
-            dangerouslySetInnerHTML: {
-              __html: wt.sanitize(
-                (h = e == null ? void 0 : e.data) == null
-                  ? void 0
-                  : h.media_description,
-              ),
-            },
-            className:
-              "text-[#333333] text-center lg:w-[50%] w-[100%] text-[1em] lg:p-0 p-[0.5rem] whitespace-pre-line",
-          }),
-        }),
-        m.jsxs("div", {
-          className: "mt-6 relative",
-          children: [
-            m.jsx("svg", {
-              width: "0",
-              height: "0",
-              children: m.jsx("defs", {
-                children: m.jsx("clipPath", {
-                  id: "clip",
-                  clipPathUnits: "objectBoundingBox",
-                  children: m.jsx("path", {
-                    d: "M0,0 Q0.5,0.1 1,0 L1,0.9 Q0.5,0.82 0,0.9 Z",
-                  }),
-                }),
-              }),
-            }),
+        className: "mt-[4em]",
+        children: [
+            m.jsx(bg, { title: Z.t("Media") }),
             m.jsx("div", {
-              className: "overflow-hidden",
-              style: { clipPath: "url(#clip)" },
-              onMouseEnter: () => o(!0),
-              onMouseLeave: () => o(!1),
-              children: m.jsx(hM, {
-                play: !s,
-                direction: Z.language === "ar" ? "left" : "right",
-                style: { direction: "ltr" },
-                gradient: !1,
-                speed: 200,
-                children:
-                  (v = t == null ? void 0 : t.data) == null
-                    ? void 0
-                    : v.map((y, S) => {
-                      const x = c(y.video),
-                        w = d(y.video);
-                      return m.jsx(
-                        "div",
-                        {
-                          className: "relative mr-6",
-                          children:
-                            r !== S
-                              ? m.jsxs("div", {
-                                className: "relative",
-                                children: [
-                                  m.jsx("img", {
-                                    src: y.video_image,
-                                    className:
-                                      "w-[50em] h-[35em] object-cover rounded-lg cursor-pointer",
-                                    onClick: () => f(S),
-                                  }),
-                                  y.title &&
-                                  m.jsx("div", {
-                                    className: `absolute z-10 bottom-[6rem] ${Z.language == "en" ? "left-6" : "right-6"}`,
-                                    children: m.jsx("h3", {
-                                      className:
-                                        "text-gray-200  text-[1.2rem] font-bold",
-                                      children: y.title,
-                                    }),
-                                  }),
-                                  m.jsx("div", {
-                                    onClick: () => f(S),
-                                    className: `absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 \r
-                        w-[6em] h-[6em] bg-[#FF000080] rounded-full border border-white/30 \r
-                        flex justify-center items-center cursor-pointer z-10`,
-                                    children: m.jsx("img", {
-                                      src: Fw,
-                                      className: "w-[1.5em] h-[1.5em]",
-                                    }),
-                                  }),
-                                ],
-                              })
-                              : m.jsx("div", {
-                                className: "relative w-[50em] h-[35em]",
-                                children:
-                                  w && x
-                                    ? m.jsxs("div", {
-                                      className: "relative w-full h-full",
-                                      children: [
-                                        m.jsx("iframe", {
-                                          src: `https://www.youtube.com/embed/${x}?autoplay=1&rel=0&mute=0`,
-                                          className:
-                                            "w-full h-full rounded-lg",
-                                          allow:
-                                            "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
-                                          allowFullScreen: !0,
-                                          title:
-                                            y.title || "YouTube video",
-                                          loading: "lazy",
-                                        }),
-                                        y.title &&
-                                        m.jsx("div", {
-                                          className: `absolute z-10 bottom-[6rem] ${Z.language == "en" ? "left-2" : "right-2"}`,
-                                          children: m.jsx("h3", {
-                                            className:
-                                              "text-white text-[1.2rem] font-bold ",
-                                            children: y.title,
-                                          }),
-                                        }),
-                                        m.jsx("button", {
-                                          onClick: () => i(null),
-                                          className:
-                                            "absolute top-4 right-4 bg-black/70 text-white w-8 h-8 rounded-full flex items-center justify-center text-lg z-20 hover:bg-black/90 transition-colors",
-                                          "aria-label": "Close video",
-                                          children: "×",
-                                        }),
-                                      ],
-                                    })
-                                    : m.jsxs("div", {
-                                      className: "relative w-full h-full",
-                                      children: [
-                                        m.jsx("video", {
-                                          src: y.video,
-                                          autoPlay: !0,
-                                          controls: !0,
-                                          className:
-                                            "w-full h-full object-cover rounded-lg",
-                                          playsInline: !0,
-                                        }),
-                                        m.jsx("button", {
-                                          onClick: () => i(null),
-                                          className:
-                                            "absolute top-4 right-4 bg-black/70 text-white w-8 h-8 rounded-full flex items-center justify-center text-lg z-20 hover:bg-black/90 transition-colors",
-                                          "aria-label": "Close video",
-                                          children: "×",
-                                        }),
-                                      ],
-                                    }),
-                              }),
-                        },
-                        S,
-                      );
-                    }),
-              }),
+                className: "flex items-center justify-center mt-4",
+                children: m.jsx("p", {
+                    dangerouslySetInnerHTML: {
+                        __html: wt.sanitize(
+                            (h = e?.data)?.media_description || "",
+                        ),
+                    },
+                    className: "text-[#333333] text-center lg:w-[50%] w-[100%] text-[1em] lg:p-0 p-[0.5rem] whitespace-pre-line",
+                }),
             }),
-          ],
-        }),
-      ],
+            m.jsxs("div", {
+                className: "mt-6 relative",
+                children: [
+                    m.jsx("svg", {
+                        width: "0",
+                        height: "0",
+                        children: m.jsx("defs", {
+                            children: m.jsx("clipPath", {
+                                id: "clip",
+                                clipPathUnits: "objectBoundingBox",
+                                children: m.jsx("path", {
+                                    d: "M0,0 Q0.5,0.1 1,0 L1,0.9 Q0.5,0.82 0,0.9 Z",
+                                }),
+                            }),
+                        }),
+                    }),
+                    m.jsx("div", {
+                        className: "overflow-hidden",
+                        style: { clipPath: "url(#clip)" },
+                        onMouseEnter: () => o(true),
+                        onMouseLeave: () => o(false),
+                        children: m.jsx(hM, {
+                            play: !s,
+                            direction: Z.language === "ar" ? "left" : "right",
+                            style: { direction: "ltr" },
+                            gradient: false,
+                            speed: 200,
+                            children: videos.map((y, S) => {
+                                const x = c(y.video);
+                                const w = d(y.video);
+                                return m.jsx(
+                                    "div",
+                                    {
+                                        className: "relative mr-6",
+                                        onMouseLeave: r === S ? stopVideo : undefined, // Stop video when mouse leaves
+                                        children: r !== S
+                                            ? m.jsxs("div", {
+                                                className: "relative",
+                                                children: [
+                                                    m.jsx("img", {
+                                                        src: y.video_image,
+                                                        className: "w-[50em] h-[35em] object-cover rounded-lg cursor-pointer",
+                                                        onClick: () => f(S),
+                                                    }),
+                                                    y.title && m.jsx("div", {
+                                                        className: `absolute z-10 bottom-[6rem] ${Z.language == "en" ? "left-6" : "right-6"}`,
+                                                        children: m.jsx("h3", {
+                                                            className: "text-gray-200 text-[1.2rem] font-bold",
+                                                            children: y.title,
+                                                        }),
+                                                    }),
+                                                    m.jsx("div", {
+                                                        onClick: () => f(S),
+                                                        className: `absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+                                                            w-[6em] h-[6em] bg-[#FF000080] rounded-full border border-white/30 
+                                                            flex justify-center items-center cursor-pointer z-10`,
+                                                        children: m.jsx("img", {
+                                                            src: Fw,
+                                                            className: "w-[1.5em] h-[1.5em]",
+                                                        }),
+                                                    }),
+                                                ],
+                                            })
+                                            : m.jsx("div", {
+                                                className: "relative w-[50em] h-[35em]",
+                                                children: w && x
+                                                    ? m.jsxs("div", {
+                                                        className: "relative w-full h-full",
+                                                        children: [
+                                                            m.jsx("iframe", {
+                                                                src: `https://www.youtube.com/embed/${x}?autoplay=1&rel=0&mute=0`,
+                                                                className: "w-full h-full rounded-lg",
+                                                                allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share",
+                                                                allowFullScreen: true,
+                                                                title: y.title || "YouTube video",
+                                                                loading: "lazy",
+                                                            }),
+                                                            y.title && m.jsx("div", {
+                                                                className: `absolute z-10 bottom-[6rem] ${Z.language == "en" ? "left-2" : "right-2"}`,
+                                                                children: m.jsx("h3", {
+                                                                    className: "text-white text-[1.2rem] font-bold ",
+                                                                    children: y.title,
+                                                                }),
+                                                            }),
+                                                            m.jsx("button", {
+                                                                onClick: stopVideo,
+                                                                className: "absolute top-4 right-4 bg-black/70 text-white w-8 h-8 rounded-full flex items-center justify-center text-lg z-20 hover:bg-black/90 transition-colors",
+                                                                "aria-label": "Close video",
+                                                                children: "×",
+                                                            }),
+                                                        ],
+                                                    })
+                                                    : m.jsxs("div", {
+                                                        className: "relative w-full h-full",
+                                                        children: [
+                                                            m.jsx("video", {
+                                                                src: y.video,
+                                                                autoPlay: true,
+                                                                controls: true,
+                                                                className: "w-full h-full object-cover rounded-lg",
+                                                                playsInline: true,
+                                                            }),
+                                                            m.jsx("button", {
+                                                                onClick: stopVideo,
+                                                                className: "absolute top-4 right-4 bg-black/70 text-white w-8 h-8 rounded-full flex items-center justify-center text-lg z-20 hover:bg-black/90 transition-colors",
+                                                                "aria-label": "Close video",
+                                                                children: "×",
+                                                            }),
+                                                        ],
+                                                    }),
+                                            }),
+                                    },
+                                    S
+                                );
+                            }),
+                        }),
+                    }),
+                ],
+            }),
+        ],
     });
-  },
+},
   DM = ({ homePageData: e, ProfissionalExperiencesData: t }) => {
     var r, i;
     return m.jsx("div", {
@@ -37277,7 +37289,7 @@ const M8 = yU({
           ],
         }),
         m.jsx("div", {
-          className: "flex justify-end",
+          className: "flex justify-start",
           children: m.jsx("button", {
             type: "submit",
             disabled: c,
@@ -38686,11 +38698,10 @@ const qn = () => {
       className: `w-full relative flex items-center justify-center text-center ${s}`,
       children: [
         m.jsx("div", {
-          className: `absolute ${o ? "lg:rounded-3xl" : ""} w-full h-full bg-cover bg-center -z-10 transition-all duration-700`,
+          className: `absolute ${o ? "lg:rounded-3xl" : ""} w-full h-full bg-cover  -z-10 transition-all duration-700`,
           style: {
             backgroundImage: `${i}, url(${e})`,
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
           },
         }),
         m.jsxs("div", {
@@ -38769,148 +38780,513 @@ const qn = () => {
           }),
         });
   },
-  $D = ({ videoData: e, homePageData: t }) => {
+$D = ({ videoData: e, homePageData: t }) => {
     var S, x, w;
-    const [r, i] = O.useState(8),
-      [s, o] = O.useState(!1),
-      [c, d] = O.useState(null),
-      f = (E) => {
-        try {
-          const A =
-            /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/,
-            T = E.match(A);
-          return T ? T[1] : null;
-        } catch (A) {
-          return (console.error("Error extracting YouTube ID:", A), null);
+    const { lang: currentLang } = wi();
+    const [language, setLanguage] = O.useState(currentLang || Z.language || "en");
+    const [r, i] = O.useState(8);
+    const [isLoadingMore, setIsLoadingMore] = O.useState(false);
+    const [selectedVideoId, setSelectedVideoId] = O.useState(null);
+    
+    // Temporary filter states (for UI selection)
+    const [tempSelectedCategory, setTempSelectedCategory] = O.useState("all");
+    const [tempSortBy, setTempSortBy] = O.useState("");
+    const [tempLanguage, setTempLanguage] = O.useState(language);
+    
+    // Applied filter states (for actual fetching)
+    const [appliedCategory, setAppliedCategory] = O.useState("all");
+    const [appliedSortBy, setAppliedSortBy] = O.useState("");
+    const [appliedLanguage, setAppliedLanguage] = O.useState(language);
+    
+    const [videoCategories, setVideoCategories] = O.useState([{ name: "all" }]);
+    const [isLoadingCategories, setIsLoadingCategories] = O.useState(true);
+    const [isLoadingVideos, setIsLoadingVideos] = O.useState(false);
+    const [videos, setVideos] = O.useState([]);
+    const [isApplyingFilters, setIsApplyingFilters] = O.useState(false);
+    
+    const getSortParameter = (sortValue, currentLanguage) => {
+        if (!sortValue) return null;
+        const isArabic = currentLanguage === "ar";
+        
+        switch (sortValue) {
+            case "title_asc":
+                return isArabic ? "title_ar" : "title_en";
+            case "id_asc":
+                return "id_asc";
+            case "id_desc":
+                return "id_desc";
+            default:
+                return null;
         }
-      },
-      h = () => {
-        (o(!0),
-          setTimeout(() => {
-            (i((E) => E + 2), o(!1));
-          }, 1e3));
-      },
-      v = (E) => {
-        d(E);
-      },
-      y = () => {
-        d(null);
-      };
+    };
+    
+    const fetchCategories = async (currentLanguage) => {
+        setIsLoadingCategories(true);
+        try {
+            const langParam = currentLanguage === 'ar' ? 'ar' : 'en';
+            const response = await ft.get(`/video/category?language=${langParam}`);
+            const categoriesData = response.data?.data || [];
+            
+            const formattedCategories = [
+                { name: "all" },
+                ...categoriesData.map(cat => ({ 
+                    name: cat.name,
+                    id: cat.id 
+                }))
+            ];
+            
+            setVideoCategories(formattedCategories);
+            console.log("Fetched categories:", formattedCategories);
+        } catch (error) {
+            console.error("Error fetching categories:", error);
+            setVideoCategories([
+                { name: "all" },
+                { name: "Interviews" },
+                { name: "Presentations" },
+                { name: "Workshops" },
+                { name: "Documentaries" },
+                { name: "Tutorials" }
+            ]);
+        } finally {
+            setIsLoadingCategories(false);
+        }
+    };
+    
+    const fetchVideos = async (currentLanguage, category, sortByValue) => {
+        setIsLoadingVideos(true);
+        try {
+            let url = "/videos";
+            const params = new URLSearchParams();
+            
+            // Add language parameter
+            const langParam = currentLanguage === 'ar' ? 'ar' : 'en';
+            params.append("language", langParam);
+            
+            if (category && category !== "all") {
+                params.append("category", category);
+            }
+            
+            const sortParam = getSortParameter(sortByValue, currentLanguage);
+            if (sortParam) {
+                params.append("sort", sortParam);
+            }
+            
+            if (params.toString()) {
+                url += `?${params.toString()}`;
+            }
+            
+            console.log("Fetching videos from:", url);
+            const response = await ft.get(url);
+            
+            let videosData = [];
+            
+            if (category !== "all") {
+                videosData = response.data?.videos || [];
+            } else {
+                videosData = response.data?.data || response.data || [];
+            }
+            
+            console.log("Fetched videos:", videosData);
+            setVideos(videosData);
+            return videosData;
+        } catch (error) {
+            console.error("Error fetching videos:", error);
+            const fallbackData = Array.isArray(e) ? e : (e?.data || []);
+            setVideos(fallbackData);
+            return fallbackData;
+        } finally {
+            setIsLoadingVideos(false);
+        }
+    };
+    
+    // Handle language change in UI (temporary)
+    const handleLanguageChange = (newLanguage) => {
+        setTempLanguage(newLanguage);
+    };
+    
+    // Apply all filters together (language, category, sort)
+    const applyFilters = async () => {
+        setIsApplyingFilters(true);
+        
+        // Apply all selected filters
+        setAppliedLanguage(tempLanguage);
+        setAppliedCategory(tempSelectedCategory);
+        setAppliedSortBy(tempSortBy);
+        
+        i(8); // Reset pagination
+        
+        // Fetch categories with new language
+        await fetchCategories(tempLanguage);
+        
+        // Fetch videos with all applied filters
+        await fetchVideos(tempLanguage, tempSelectedCategory, tempSortBy);
+        
+        setIsApplyingFilters(false);
+    };
+    
+    // Initial load
+    O.useEffect(() => {
+        fetchCategories(language);
+        fetchVideos(language, appliedCategory, appliedSortBy);
+    }, []);
+    
+    const extractYouTubeId = (videoUrl) => {
+        try {
+            const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+            const match = videoUrl.match(regex);
+            return match ? match[1] : null;
+        } catch (error) {
+            console.error("Error extracting YouTube ID:", error);
+            return null;
+        }
+    };
+    
+    const formatDate = (dateString) => {
+        if (!dateString) return "";
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString(appliedLanguage === 'ar' ? 'ar-EG' : 'en-US', options);
+    };
+    
+    const getFilteredVideos = () => {
+        return Array.isArray(videos) ? videos : [];
+    };
+    
+    const filteredVideos = getFilteredVideos();
+    
+    const loadMoreVideos = () => {
+        setIsLoadingMore(true);
+        setTimeout(() => {
+            i((prev) => prev + 6);
+            setIsLoadingMore(false);
+        }, 1000);
+    };
+    
+    const handleVideoClick = (videoId) => {
+        setSelectedVideoId(videoId);
+    };
+    
+    const closeVideoPlayer = () => {
+        setSelectedVideoId(null);
+    };
+    
+    const resetFilters = () => {
+        // Reset temporary states
+        setTempLanguage(appliedLanguage);
+        setTempSelectedCategory("all");
+        setTempSortBy("");
+        
+        // Reset applied states
+        setAppliedCategory("all");
+        setAppliedSortBy("");
+        
+        i(8);
+        
+        // Fetch videos with reset filters but keep same language
+        fetchVideos(appliedLanguage, "all", "");
+    };
+    
+    const handleCategoryChange = (category) => {
+        setTempSelectedCategory(category);
+    };
+    
+    const handleSortChange = (event) => {
+        setTempSortBy(event.target.value);
+    };
+    
+    if (isLoadingVideos) {
+        return m.jsx("div", {
+            className: "fixed inset-0 bg-white z-50 flex justify-center items-center",
+            children: m.jsx("div", {
+                className: "w-16 h-16 border-4 rounded-full animate-spin",
+                style: { 
+                    borderColor: "#005770",
+                    borderTopColor: "transparent"
+                }
+            })
+        });
+    }
+    
     return m.jsxs("div", {
-      className: "mt-[2rem]",
-      children: [
-        m.jsx("h1", {
-          className: "font-bold text-[1.5rem] text-secondary",
-          children: Z.t("Media"),
-        }),
-        m.jsx("p", {
-          dangerouslySetInnerHTML: {
-            __html: wt.sanitize(
-              (S = t == null ? void 0 : t.data) == null
-                ? void 0
-                : S.media_description,
-            ),
-          },
-          className:
-            "text-[#666666] text-[1rem] lg:w-[60%] w-[100%] mt-2 whitespace-pre-line",
-        }),
-        m.jsxs("div", {
-          className:
-            "grid md:grid-cols-2 grid-cols-1 gap-x-[3rem] gap-y-[2rem] mt-[2rem]",
-          children: [
-            (x = e == null ? void 0 : e.data) == null
-              ? void 0
-              : x.slice(0, r).map((E) => {
-                const A = f(E.video);
-                return m.jsx(
-                  "div",
-                  {
-                    className: "relative",
-                    children:
-                      c === E.id && A
-                        ? m.jsxs("div", {
-                          className: "relative w-full",
-                          children: [
+        className: "lg:mt-[4rem] mt-[2.5rem]",
+        children: [
+            m.jsxs("div", {
+                className: "grid lg:grid-cols-12 grid-cols-1 gap-x-[2rem] lg:gap-y-0 gap-y-[2rem]",
+                children: [
+                    // Filter Sidebar
+                    m.jsxs("div", {
+                        className: "lg:col-span-3 col-span-full",
+                        children: [
                             m.jsxs("div", {
-                              className: "relative w-full pt-[56.25%]",
-                              children: [
-                                " ",
-                                m.jsx("iframe", {
-                                  src: `https://www.youtube.com/embed/${A}?autoplay=1&rel=0`,
-                                  className:
-                                    "absolute top-0 left-0 w-full h-full rounded-3xl",
-                                  allow:
-                                    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
-                                  allowFullScreen: !0,
-                                  title: E.title,
-                                }),
-                              ],
+                                style: { boxShadow: "0px 0px 4px 0px #00000040" },
+                                className: "w-full h-auto py-[1.5rem] mt-[1rem] rounded-3xl p-[1.5rem]",
+                                children: [
+                                    m.jsx("h1", {
+                                        className: "font-bold text-[1.2rem] text-secondary",
+                                        children: Z.t("filter_and_sort"),
+                                    }),
+                                    
+                                    // Language Selector inside the box - لغة الفيديوهات
+                                    m.jsxs("div", {
+                                        className: "mt-4 mb-6",
+                                        children: [
+                                            m.jsx("p", {
+                                                className: "text-[1rem] mb-2 text-secondary font-medium",
+                                                children: Z.t("video_language"),
+                                            }),
+                                            m.jsxs("div", {
+                                                className: "flex gap-2 bg-gray-100 p-1 rounded-full",
+                                                children: [
+                                                    m.jsx("button", {
+                                                        onClick: () => handleLanguageChange("en"),
+                                                        className: `flex-1 px-4 text-[1rem] py-2 rounded-full transition-colors ${tempLanguage === "en" ? "bg-negative text-white font-bold" : "text-primary bg-[#E7EDF3] hover:bg-gray-200"}`,
+                                                        children: "English",
+                                                    }),
+                                                    m.jsx("button", {
+                                                        onClick: () => handleLanguageChange("ar"),
+                                                        className: `flex-1 px-4 py-2 text-[1rem] rounded-full transition-colors ${tempLanguage === "ar" ? "bg-negative text-white font-bold" : "text-primary bg-[#E7EDF3] hover:bg-gray-200"}`,
+                                                        style: { fontFamily: "FF Shamel, sans-serif" },
+                                                        children: "العربية",
+                                                    }),
+                                                ],
+                                            }),
+                                        ],
+                                    }),
+                                    
+                                    // Categories Section
+                                    m.jsx("p", {
+                                        className: "text-[1rem] font-medium mt-4 text-secondary",
+                                        children: Z.t("filter_by"),
+                                    }),
+                                    m.jsxs("div", {
+                                        className: "flex flex-row flex-wrap gap-x-[0.5rem] gap-y-[1rem] mt-4",
+                                        children: [
+                                            isLoadingCategories ? (
+                                                Array.from({ length: 5 }).map((_, idx) =>
+                                                    m.jsx("div", {
+                                                        className: "w-auto h-[2.2rem] px-[2rem] bg-gray-200 animate-pulse rounded-full",
+                                                    }, idx)
+                                                )
+                                            ) : (
+                                                videoCategories.map((category, idx) =>
+                                                    m.jsx(
+                                                        "button",
+                                                        {
+                                                            onClick: () => handleCategoryChange(category.name),
+                                                            className: `w-auto h-[2.2rem] px-[1rem] rounded-full flex justify-center items-center text-[1rem] ${tempSelectedCategory === category.name ? "bg-negative text-white font-bold" : "bg-[#E7EDF3] text-primary"}`,
+                                                            children: category.name === "all" ? Z.t("all") : category.name,
+                                                        },
+                                                        idx,
+                                                    )
+                                                )
+                                            )
+                                        ],
+                                    }),
+                                    
+                                    // Sort and Apply Filters Section
+                                    m.jsx("div", {
+                                        className: "mt-5",
+                                        children: m.jsxs("div", {
+                                            className: "space-y-2",
+                                            children: [
+                                                m.jsx("label", {
+                                                    htmlFor: "sort",
+                                                    className: "block text-sm font-medium text-gray-700",
+                                                    children: Z.t("sort to"),
+                                                }),
+                                                m.jsxs("select", {
+                                                    id: "sort",
+                                                    value: tempSortBy,
+                                                    onChange: handleSortChange,
+                                                    className: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5",
+                                                    children: [
+                                                        m.jsxs("option", {
+                                                            value: "",
+                                                            disabled: true,
+                                                            hidden: true,
+                                                            children: [
+                                                                Z.t("choose"),
+                                                                " ",
+                                                                Z.t("sort order").toLowerCase(),
+                                                            ],
+                                                        }),
+                                                        m.jsx("option", {
+                                                            value: "title_asc",
+                                                            children: Z.t("title"),
+                                                        }),
+                                                        m.jsx("option", {
+                                                            value: "id_asc",
+                                                            children: Z.t("The oldest first"),
+                                                        }),
+                                                        m.jsx("option", {
+                                                            value: "id_desc",
+                                                            children: Z.t("The newest first"),
+                                                        }),
+                                                    ],
+                                                }),
+                                                // Apply Filters Button - applies language, category, and sort together
+                                                m.jsx("button", {
+                                                    onClick: applyFilters,
+                                                    disabled: isApplyingFilters,
+                                                    className: `w-full mt-4 py-2 rounded-lg text-white font-bold ${isApplyingFilters ? "bg-gray-400 cursor-not-allowed" : "bg-negative hover:bg-red-700"} transition-colors`,
+                                                    children: isApplyingFilters ? Z.t("apply") : Z.t("Apply_the_filter"),
+                                                }),
+                                                m.jsx("p", {
+                                                    onClick: resetFilters,
+                                                    className: "mt-[1rem] text-[#5B1B1B] text-center cursor-pointer hover:text-red-700",
+                                                    children: Z.t("reset"),
+                                                }),
+                                            ],
+                                        }),
+                                    }),
+                                ],
                             }),
-                            m.jsx("button", {
-                              onClick: y,
-                              className:
-                                "absolute top-3 right-3 bg-black/60 text-white w-8 h-8 rounded-full flex items-center justify-center text-lg z-10",
-                              children: m.jsx("p", { children: "×" }),
+                        ],
+                    }),
+                    
+                    // Videos Grid
+                    m.jsxs("div", {
+                        className: "lg:col-span-9 col-span-1",
+                        children: [
+                            m.jsx("h1", {
+                                className: "font-bold text-[1.5rem] text-secondary mt-[1rem]",
+                                children: Z.t("Media"),
                             }),
-                          ],
-                        })
-                        : m.jsx(m.Fragment, {
-                          children: m.jsxs("div", {
-                            className: "relative",
-                            children: [
-                              m.jsx("img", {
-                                className:
-                                  "w-full lg:h-[22rem] h-[20rem] object-cover rounded-3xl cursor-pointer",
-                                src: E.video_image,
-                                onClick: () => v(E.id),
-                              }),
-                              m.jsx("div", {
-                                className:
-                                  "absolute inset-0 flex items-center justify-center pointer-events-none",
-                                children: m.jsx("div", {
-                                  className:
-                                    "lg:w-[7rem] lg:h-[7rem] md:w-[5rem] md:h-[5rem] w-[3.5rem] h-[3.5rem] rounded-full bg-[#FF000080] flex justify-center items-center border border-white/30",
-                                  children: m.jsx("img", {
-                                    className: "md:w-[2rem] w-[1rem]",
-                                    src: Fw,
-                                    alt: "play",
-                                  }),
-                                }),
-                              }),
-                              m.jsx("h3", {
-                                className:
-                                  "text-white absolute bottom-4 px-6 text-[1.2rem] font-bold",
-                                children: E.title,
-                              }),
-                            ],
-                          }),
-                        }),
-                  },
-                  E.id,
-                );
-              }),
-            s &&
-            Array.from({ length: 2 }).map((E, A) =>
-              m.jsx(
-                "div",
-                {
-                  className:
-                    "w-full h-[22rem] bg-gray-200 animate-pulse rounded-3xl",
-                },
-                A,
-              ),
-            ),
-          ],
-        }),
-        r < ((w = e == null ? void 0 : e.data) == null ? void 0 : w.length) &&
-        !s &&
-        m.jsx("div", {
-          className: "flex justify-center items-center mt-[4rem]",
-          children: m.jsx(of, { onClick: h }),
-        }),
-      ],
+                            m.jsx("p", {
+                                dangerouslySetInnerHTML: {
+                                    __html: wt.sanitize(
+                                        (S = t == null ? void 0 : t.data) == null
+                                            ? void 0
+                                            : S.media_description,
+                                    ),
+                                },
+                                className: "text-[#666666] text-[1rem] lg:w-[60%] w-[100%] mt-2 whitespace-pre-line",
+                            }),
+                            m.jsxs("div", {
+                                className: "grid md:grid-cols-2 grid-cols-1 gap-x-[3rem] gap-y-[2rem] mt-[2rem]",
+                                children: [
+                                    filteredVideos.length === 0 && !isLoadingVideos ? (
+                                        m.jsx("div", {
+                                            className: "col-span-full text-center py-8",
+                                            children: m.jsx("p", {
+                                                className: "text-negative font-bold text-lg",
+                                                children: Z.t("no_videos_found")
+                                            })
+                                        })
+                                    ) : (
+                                        filteredVideos.slice(0, r).map((video) => {
+                                            const youtubeId = extractYouTubeId(video.video);
+                                            return m.jsx(
+                                                "div",
+                                                {
+                                                    className: "relative",
+                                                    children: selectedVideoId === video.id && youtubeId
+                                                        ? m.jsxs("div", {
+                                                            className: "relative w-full",
+                                                            children: [
+                                                                m.jsxs("div", {
+                                                                    className: "relative w-full lg:h-[22rem] h-[20rem] rounded-3xl overflow-hidden",
+                                                                    children: [
+                                                                        " ",
+                                                                        m.jsx("iframe", {
+                                                                            src: `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`,
+                                                                            className: "absolute top-0 left-0 w-full h-full",
+                                                                            allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+                                                                            allowFullScreen: true,
+                                                                            title: video.title,
+                                                                        }),
+                                                                    ],
+                                                                }),
+                                                                m.jsx("button", {
+                                                                    onClick: closeVideoPlayer,
+                                                                    className: "absolute top-3 right-3 bg-black/60 text-white w-8 h-8 rounded-full flex items-center justify-center text-lg z-10",
+                                                                    children: m.jsx("p", { children: "×" }),
+                                                                }),
+                                                            ],
+                                                        })
+                                                        : m.jsx(m.Fragment, {
+                                                            children: m.jsxs("div", {
+                                                                className: "relative",
+                                                                children: [
+                                                                    // Image container with gradient overlay
+                                                                    m.jsxs("div", {
+                                                                        className: "relative w-full lg:h-[22rem] h-[20rem] rounded-3xl cursor-pointer overflow-hidden",
+                                                                        onClick: () => handleVideoClick(video.id),
+                                                                        children: [
+                                                                            m.jsx("img", {
+                                                                                className: "w-full h-full object-cover",
+                                                                                src: video.video_image,
+                                                                                alt: video.title,
+                                                                            }),
+                                                                            // Gradient overlay
+                                                                            m.jsx("div", {
+                                                                                className: "absolute inset-0",
+                                                                                style: {
+                                                                                    background: "linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.95) 100%)" 
+                                                                                }
+                                                                            }),
+                                                                            // Play button overlay
+                                                                            m.jsx("div", {
+                                                                                className: "absolute inset-0 flex items-center justify-center pointer-events-none",
+                                                                                children: m.jsx("div", {
+                                                                                    className: "lg:w-[7rem] lg:h-[7rem] md:w-[5rem] md:h-[5rem] w-[3.5rem] h-[3.5rem] rounded-full bg-[#FF000080] flex justify-center items-center border border-white/30",
+                                                                                    children: m.jsx("img", {
+                                                                                        className: "md:w-[2rem] w-[1rem]",
+                                                                                        src: Fw,
+                                                                                        alt: "play",
+                                                                                    }),
+                                                                                }),
+                                                                            }),
+                                                                            // Title and Date overlay with flex justify-between
+                                                                            m.jsxs("div", {
+                                                                                className: "absolute bottom-4 left-0 right-0 px-6 z-10 flex justify-between items-center",
+                                                                                children: [
+                                                                                    m.jsx("h3", {
+                                                                                        className: "text-white text-[0.9rem] font-bold flex-1 width_title",
+                                                                                        children: video.title,
+                                                                                    }),
+                                                                                    m.jsx("p", {
+                                                                                        className: "text-white text-[0.9rem] opacity-90",
+                                                                                        children: formatDate(video.date),
+                                                                                    }),
+                                                                                ],
+                                                                            }),
+                                                                        ],
+                                                                    }),
+                                                                ],
+                                                            }),
+                                                        }),
+                                                },
+                                                video.id,
+                                            );
+                                        })
+                                    ),
+                                    isLoadingMore &&
+                                    Array.from({ length: 2 }).map((_, idx) =>
+                                        m.jsx(
+                                            "div",
+                                            {
+                                                className: "w-full lg:h-[22rem] h-[20rem] bg-gray-200 animate-pulse rounded-3xl",
+                                            },
+                                            idx,
+                                        ),
+                                    ),
+                                ],
+                            }),
+                            r < filteredVideos.length &&
+                            !isLoadingMore &&
+                            filteredVideos.length > 0 &&
+                            m.jsx("div", {
+                                className: "flex justify-center items-center mt-[4rem]",
+                                children: m.jsx(of, { onClick: loadMoreVideos }),
+                            }),
+                        ],
+                    }),
+                ],
+            }),
+        ],
     });
-  },
+},
   iS = ({ videoDataPage: e }) => {
     var t, r;
     return (
@@ -38952,17 +39328,9 @@ const qn = () => {
                     : S.meta_description,
               }),
               m.jsx(ir, {}),
-              m.jsx("div", {
-                className: "lg:hidden block",
-                children: m.jsx(iS, { videoDataPage: i }),
-              }),
               m.jsxs("div", {
                 className: "container6 mx-auto",
                 children: [
-                  m.jsx("div", {
-                    className: "lg:block hidden",
-                    children: m.jsx(iS, { videoDataPage: i }),
-                  }),
                   m.jsx($D, { videoData: c, homePageData: e }),
                 ],
               }),
@@ -39238,7 +39606,7 @@ const QD = "/assets/no_result-CkkPji2_.svg",
                       m.jsx("input", {
                         type: "search",
                         className:
-                          "w-full h-[3.3rem] border border-[#E7E8E9] outline-none p-[1rem] rounded-tr-lg",
+                          "w-full h-[3.3rem] border border-[#E7E8E9] outline-none p-[1rem] rounded-tr-lg z-100",
                         value: E,
                         onChange: (Ae) => {
                           (A(Ae.target.value),
@@ -39282,7 +39650,7 @@ const QD = "/assets/no_result-CkkPji2_.svg",
                         children: [
                           m.jsx("button", {
                             onClick: () => we(Z.t("all")),
-                            className: `w-auto h-[2.2rem] px-[1rem] rounded-full flex justify-center items-center text-[1.1rem] ${y === Z.t("all") ? "bg-negative text-white" : "bg-[#E7EDF3] text-primary"}`,
+                            className: `w-full h-[2.2rem] px-[1rem] rounded-full flex justify-center items-center text-[1.1rem] ${y === Z.t("all") ? "bg-negative text-white" : "bg-[#E7EDF3] text-primary"}`,
                             children: Z.t("all"),
                           }),
                           (Le = t == null ? void 0 : t.data) == null
@@ -40048,7 +40416,7 @@ const QD = "/assets/no_result-CkkPji2_.svg",
                         children: [
                           m.jsx("h1", {
                             className:
-                              "font-bold text-[#000000] text-[1.3rem] mt-4",
+                              "font-bold text-[#000000] text-[1.2rem] mt-4",
                             children: r.title,
                           }),
                           m.jsx("p", {
@@ -40229,7 +40597,7 @@ const QD = "/assets/no_result-CkkPji2_.svg",
       _ = () => {
         (v(!0),
           setTimeout(() => {
-            (f((ee) => ee + 1), v(!1));
+            (f((ee) => ee + 3), v(!1));
           }, 3e3));
       },
       M = () => (!x || !x.activities ? !1 : T < x.activities.length),
@@ -40293,7 +40661,7 @@ const QD = "/assets/no_result-CkkPji2_.svg",
                       }),
                       m.jsx("h1", {
                         className:
-                          "text-[#000000] mt-[1rem] font-bold text-[1.4rem]",
+                          "text-[#000000] mt-[1rem] font-bold text-[1.2rem]",
                         children: ee.title,
                       }),
                       m.jsx("p", {
@@ -40406,13 +40774,13 @@ const QD = "/assets/no_result-CkkPji2_.svg",
                 : t.description,
             ),
           },
-          className: "text-[1.1rem] text-[#666666]",
+          className: "text-[1rem] text-[#666666]",
         }),
         m.jsxs("div", {
           className: "lg:mt-[4rem] mt-[2rem] relative",
           children: [
             m.jsx(ia, {
-              height: "h-[20rem]",
+              height: "h-[30rem]",
               gradient:
                 "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 6, 10, 0.147763) 23.95%, rgba(0, 11, 19, 0.277451) 45.9%, #002946 100%)",
               image:
@@ -41052,11 +41420,10 @@ const Pk = ({ content: e }) => {
       className: `w-full relative ${s}`,
       children: [
         m.jsx("div", {
-          className: `absolute ${o ? "rounded-3xl" : ""} w-full h-full bg-cover bg-center -z-10 transition-all duration-700`,
+          className: `absolute ${o ? "rounded-3xl" : ""} w-full h-full bg-cover -z-10 transition-all duration-700`,
           style: {
             backgroundImage: `${i}, url(${e})`,
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
           },
         }),
         m.jsxs("div", {
@@ -41583,7 +41950,7 @@ const Pk = ({ content: e }) => {
   },
   sH = ({ activitiesCategoryContentData: e }) => {
     var d, f;
-    const { id: t } = wi();
+    const { id: t, lang: currentLang } = wi(); // Get current language
     Si();
     const r = (e == null ? void 0 : e.data) || [];
     let i = null;
@@ -41602,6 +41969,10 @@ const Pk = ({ content: e }) => {
           ? void 0
           : f.slice(0, 3)) || [],
       c = o.length > 0 ? o : [];
+      
+    // Get the current language
+    const lang = currentLang || window.location.pathname.split('/')[1] || 'en';
+      
     return m.jsxs("div", {
       className: "lg:col-span-4 col-span-1",
       children: [
@@ -41625,9 +41996,13 @@ const Pk = ({ content: e }) => {
                     className: "flex flex-col",
                     children: [
                       m.jsx("img", {
+                        onClick: () => {
+                          window.location.href = `/${lang}/activity/${h.id}`;
+                        },
                         className:
-                          "w-full h-[15rem] object-cover rounded-2xl",
+                          "w-full h-[15rem] object-cover rounded-2xl cursor-pointer hover:opacity-90 transition-opacity",
                         src: h.banner,
+                        alt: h.title,
                       }),
                       m.jsxs("div", {
                         className: "flex justify-between",
@@ -42298,6 +42673,112 @@ function uH({ swiper: e, extendParams: t, on: r, emit: i, params: s }) {
 }
 const cH = ({ activityByIdData: e }) => {
   var t;
+  
+  // Use a different approach without useState
+  var videoPlayerId = 'video-player-' + Math.random().toString(36).substr(2, 9);
+  var thumbnailId = 'video-thumbnail-' + Math.random().toString(36).substr(2, 9);
+  
+  // Function to handle video click - shows video inline instead of fixed modal
+  var handleVideoClick = function() {
+    // Hide thumbnail container, show video container
+    var thumbnailContainer = document.getElementById(thumbnailId);
+    var videoContainer = document.getElementById(videoPlayerId);
+    
+    if (thumbnailContainer) thumbnailContainer.style.display = 'none';
+    if (videoContainer) videoContainer.style.display = 'block';
+    
+    // Auto-play the video if it's an iframe
+    var iframe = videoContainer ? videoContainer.querySelector('iframe') : null;
+    if (iframe) {
+      var src = iframe.src;
+      if (src.indexOf('autoplay=1') === -1) {
+        iframe.src = src + (src.indexOf('?') === -1 ? '?autoplay=1' : '&autoplay=1');
+      }
+    }
+  };
+  
+  var handleCloseVideo = function() {
+    var thumbnailContainer = document.getElementById(thumbnailId);
+    var videoContainer = document.getElementById(videoPlayerId);
+    
+    if (thumbnailContainer) thumbnailContainer.style.display = 'block';
+    if (videoContainer) videoContainer.style.display = 'none';
+    
+    // Stop the video
+    var iframe = videoContainer ? videoContainer.querySelector('iframe') : null;
+    if (iframe) {
+      var src = iframe.src;
+      iframe.src = '';
+      iframe.src = src.replace('?autoplay=1', '').replace('&autoplay=1', '');
+    }
+    
+    var video = videoContainer ? videoContainer.querySelector('video') : null;
+    if (video) {
+      video.pause();
+      video.currentTime = 0;
+    }
+  };
+  
+  // Function to get video embed URL
+  var getVideoEmbedUrl = function(videoUrl) {
+    if (!videoUrl) return null;
+    
+    // Check if it's a YouTube video
+    if (videoUrl.indexOf('youtube.com') !== -1 || videoUrl.indexOf('youtu.be') !== -1) {
+      var embedUrl = videoUrl;
+      if (videoUrl.indexOf('youtu.be') !== -1) {
+        var videoId = videoUrl.split('/').pop().split('?')[0];
+        return 'https://www.youtube.com/embed/' + videoId;
+      } else if (videoUrl.indexOf('youtube.com') !== -1) {
+        var urlParams = new URLSearchParams(videoUrl.split('?')[1]);
+        var videoId = urlParams.get('v');
+        return 'https://www.youtube.com/embed/' + videoId;
+      }
+      return embedUrl;
+    } 
+    // Check if it's a Google Drive video
+    else if (videoUrl.indexOf('drive.google.com') !== -1) {
+      var match = videoUrl.match(/\/d\/(.+?)\//);
+      var fileId = match ? match[1] : null;
+      if (fileId) {
+        return 'https://drive.google.com/file/d/' + fileId + '/preview';
+      }
+    }
+    // Direct video file
+    return videoUrl;
+  };
+  
+  // Function to render video player
+  var renderVideoPlayer = function() {
+    var videoUrl = e && e.video;
+    if (!videoUrl) return null;
+    
+    var embedUrl = getVideoEmbedUrl(videoUrl);
+    
+    // YouTube or Google Drive (iframe)
+    if (videoUrl.indexOf('youtube.com') !== -1 || videoUrl.indexOf('youtu.be') !== -1 || videoUrl.indexOf('drive.google.com') !== -1) {
+      return m.jsx("iframe", {
+        src: embedUrl,
+        className: "w-full lg:h-[28rem] h-[20rem] rounded-xl shadow-lg",
+        allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+        allowFullScreen: true,
+        frameBorder: "0"
+      });
+    } 
+    // Direct video file
+    else {
+      return m.jsx("video", {
+        src: videoUrl,
+        controls: true,
+        className: "w-full lg:h-[28rem] h-[20rem] object-contain rounded-xl shadow-lg",
+        controlsList: "nodownload"
+      });
+    }
+  };
+  
+  var hasSectionImages = e && e.section_image && e.section_image.length > 0;
+  var hasVideo = e && e.video_image && e.video;
+  
   return m.jsxs("div", {
     className: "lg:col-span-8 col-span-1 space-y-[2rem]",
     children: [
@@ -42307,38 +42788,36 @@ const cH = ({ activityByIdData: e }) => {
             className: "lg:flex justify-between",
             children: [
               m.jsx("h1", {
-                className: "font-bold text-[#333333] text-[1.8rem]",
-                children: e == null ? void 0 : e.title,
+                className: "font-bold text-[#333333] text-[1.2rem]",
+                children: e ? e.title : null,
               }),
               m.jsx("p", {
                 className: "text-[#666666] whitespace-nowrap mt-2",
-                children: Ka(e == null ? void 0 : e.date),
+                children: e ? Ka(e.date) : null,
               }),
             ],
           }),
           m.jsx("p", {
             dangerouslySetInnerHTML: {
-              __html: wt.sanitize(e == null ? void 0 : e.description),
+              __html: wt.sanitize(e ? e.description : ''),
             },
             className:
               "text-[#666666] text-justify text-[1rem] leading-[2rem] mt-2 whitespace-pre-line",
           }),
         ],
       }),
-      ((t = e == null ? void 0 : e.section_image) == null
-        ? void 0
-        : t.length) > 0 &&
+      hasSectionImages &&
       m.jsxs("div", {
         className: "relative w-full",
         children: [
           m.jsx(Ag, {
             modules: [oH, uH],
-            pagination: { clickable: !0, el: ".swiper-pagination-custom" },
-            autoplay: { delay: 3e3, disableOnInteraction: !1 },
-            loop: !0,
+            pagination: { clickable: true, el: ".swiper-pagination-custom" },
+            autoplay: { delay: 3000, disableOnInteraction: false },
+            loop: true,
             className: "!w-full !m-0 !p-0 rounded-xl",
-            children: e.section_image.map((r, i) =>
-              m.jsx(
+            children: e.section_image.map(function(r, i) {
+              return m.jsx(
                 Tg,
                 {
                   className: "!w-full !m-0 !p-0",
@@ -42349,8 +42828,8 @@ const cH = ({ activityByIdData: e }) => {
                   }),
                 },
                 i,
-              ),
-            ),
+              );
+            }),
           }),
           m.jsx("div", {
             className: "swiper-pagination-custom mt-4 flex justify-center",
@@ -42361,20 +42840,77 @@ const cH = ({ activityByIdData: e }) => {
         children: [
           m.jsx("h1", {
             className: "font-bold text-[#333333] text-[1.8rem]",
-            children: e == null ? void 0 : e.section_title,
+            children: e ? e.section_title : null,
           }),
           m.jsx("p", {
             dangerouslySetInnerHTML: {
-              __html: wt.sanitize(e == null ? void 0 : e.section_description),
+              __html: wt.sanitize(e ? e.section_description : ''),
             },
             className:
-              "text-[#666666] flex text-justify text-[1rem] leading-[2rem] mt-2 whitespace-pre-line",
+              "text-[#666666] text-[1rem] leading-[2rem] mt-2 whitespace-pre-line",
+          }),
+          // VIDEO THUMBNAIL SECTION - Shows inline video when clicked
+          hasVideo && 
+          m.jsxs("div", {
+            className: "relative mt-8",
+            children: [
+              // Thumbnail container
+              m.jsxs("div", {
+                id: thumbnailId,
+                className: "relative cursor-pointer group",
+                onClick: handleVideoClick,
+                children: [
+                  m.jsx("img", {
+                    src: e.video_image,
+                    alt: "Video thumbnail",
+                    className: "w-full lg:h-[28rem] h-[20rem] object-cover rounded-xl shadow-lg transition-all duration-300 group-hover:opacity-90",
+                    style: { cursor: 'pointer' }
+                  }),
+                  m.jsx("div", {
+                    className: "absolute inset-0 flex items-center justify-center pointer-events-none",
+                    children: m.jsx("div", {
+                      className: "bg-black/50 rounded-full p-4 transition-all duration-300 group-hover:bg-black/70 group-hover:scale-110",
+                      children: m.jsx("svg", {
+                        className: "w-12 h-12 text-white",
+                        fill: "white",
+                        viewBox: "0 0 24 24",
+                        children: m.jsx("path", {
+                          d: "M8 5v14l11-7z"
+                        })
+                      })
+                    })
+                  })
+                ]
+              }),
+              // Video container (hidden by default)
+              m.jsxs("div", {
+                id: videoPlayerId,
+                className: "relative",
+                style: { display: 'none' },
+                children: [
+                  renderVideoPlayer(),
+                  m.jsx("button", {
+                    onClick: handleCloseVideo,
+                    className: "absolute top-2 right-2 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-all duration-300 z-10",
+                    children: m.jsx("svg", {
+                      className: "w-5 h-5",
+                      fill: "white",
+                      viewBox: "0 0 24 24",
+                      children: m.jsx("path", {
+                        d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      })
+                    })
+                  })
+                ]
+              })
+            ]
           }),
         ],
       }),
     ],
   });
 },
+
   cS = ({ activityByIdData: e }) =>
     m.jsx("div", {
       className: "lg:mt-[2.5rem]",
@@ -42447,7 +42983,7 @@ const cH = ({ activityByIdData: e }) => {
                   ),
                 },
                 className:
-                  "text-[1.2rem] flex text-justify text-[#000000] leading-[2rem] mt-[1rem] whitespace-pre-line",
+                  "text-[1.2rem] text-[#000000] leading-[2rem] mt-[1rem] whitespace-pre-line",
               }),
             ],
           }),

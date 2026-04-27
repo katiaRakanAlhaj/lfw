@@ -39,7 +39,8 @@ abbr:where([title]) {
     text-decoration: underline dotted
 }
 
-h1,
+
+/* h1,
 h2,
 h3,
 h4,
@@ -47,7 +48,7 @@ h5,
 h6 {
     font-size: inherit;
     font-weight: inherit
-}
+} */
 
 a {
     color: inherit;
@@ -2793,7 +2794,6 @@ html::-webkit-scrollbar {
     0% {
         clip-path: polygon(0% 0%, 50% 10%, 100% 0%, 100% 90%, 50% 82%, 0% 90%)
     }
-
     to {
         clip-path: polygon(-20% 0%, 30% 10%, 80% 0%, 80% 90%, 30% 82%, -20% 90%)
     }
@@ -2917,7 +2917,6 @@ html[dir=ltr] ol {
         --tw-bg-opacity: 1;
         background-color: rgb(75 85 99 / var(--tw-bg-opacity))
     }
-
     .dark\:bg-gray-700 {
         --tw-bg-opacity: 1;
         background-color: rgb(55 65 81 / var(--tw-bg-opacity))
@@ -2928,65 +2927,50 @@ html[dir=ltr] ol {
     .md\:mt-0 {
         margin-top: 0
     }
-
     .md\:mt-\[9rem\] {
         margin-top: 9rem
     }
-
     .md\:block {
         display: block
     }
-
     .md\:flex {
         display: flex
     }
-
     .md\:h-\[17rem\] {
         height: 17rem
     }
-
     .md\:h-\[5rem\] {
         height: 5rem
     }
-
     .md\:h-\[7\.5rem\] {
         height: 7.5rem
     }
-
     .md\:w-\[22rem\] {
         width: 22rem
     }
-
     .md\:w-\[2rem\] {
         width: 2rem
     }
-
     .md\:w-\[5rem\] {
         width: 5rem
     }
-
     .md\:grid-cols-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr))
     }
-
     .md\:gap-y-\[2rem\] {
         row-gap: 2rem
     }
-
     .md\:space-y-\[4rem\]>:not([hidden])~:not([hidden]) {
         --tw-space-y-reverse: 0;
         margin-top: calc(4rem * calc(1 - var(--tw-space-y-reverse)));
         margin-bottom: calc(4rem * var(--tw-space-y-reverse))
     }
-
     .md\:text-\[1\.1rem\] {
         font-size: 1.1rem
     }
-
     .md\:text-\[1\.2em\] {
         font-size: 1.2em
     }
-
     .md\:text-\[1\.2rem\] {
         font-size: 1.2rem
     }
@@ -2996,279 +2980,212 @@ html[dir=ltr] ol {
     .lg\:left-1\/3 {
         left: 33.333333%
     }
-
     .lg\:col-span-12 {
         grid-column: span 12 / span 12
     }
-
     .lg\:col-span-3 {
         grid-column: span 3 / span 3
     }
-
     .lg\:col-span-4 {
         grid-column: span 4 / span 4
     }
-
     .lg\:col-span-5 {
         grid-column: span 5 / span 5
     }
-
     .lg\:col-span-6 {
         grid-column: span 6 / span 6
     }
-
     .lg\:col-span-7 {
         grid-column: span 7 / span 7
     }
-
     .lg\:col-span-8 {
         grid-column: span 8 / span 8
     }
-
     .lg\:col-span-9 {
         grid-column: span 9 / span 9
     }
-
     .lg\:mt-0 {
         margin-top: 0
     }
-
     .lg\:mt-10 {
         margin-top: 2.5rem
     }
-
     .lg\:mt-14 {
         margin-top: 3.5rem
     }
-
     .lg\:mt-4 {
         margin-top: 1rem
     }
-
     .lg\:mt-\[11rem\] {
         margin-top: 11rem
     }
-
     .lg\:mt-\[12em\] {
         margin-top: 12em
     }
-
     .lg\:mt-\[2\.5rem\] {
         margin-top: 2.5rem
     }
-
     .lg\:mt-\[3\.5rem\] {
         margin-top: 3.5rem
     }
-
     .lg\:mt-\[3rem\] {
         margin-top: 3rem
     }
-
     .lg\:mt-\[4em\] {
         margin-top: 4em
     }
-
     .lg\:mt-\[4rem\] {
         margin-top: 4rem
     }
-
     .lg\:mt-\[5\.5rem\] {
         margin-top: 5.5rem
     }
-
     .lg\:mt-\[5rem\] {
         margin-top: 5rem
     }
-
     .lg\:line-clamp-none {
         overflow: visible;
         display: block;
         -webkit-box-orient: horizontal;
         -webkit-line-clamp: none
     }
-
     .lg\:block {
         display: block
     }
-
     .lg\:flex {
         display: flex
     }
-
     .lg\:hidden {
         display: none
     }
-
     .lg\:h-\[100vh\] {
         height: 100vh
     }
-
     .lg\:h-\[12rem\] {
         height: 12rem
     }
-
     .lg\:h-\[22rem\] {
         height: 22rem
     }
-
     .lg\:h-\[24em\] {
         height: 24em
     }
-
     .lg\:h-\[25rem\] {
         height: 25rem
     }
-
     .lg\:h-\[27rem\] {
         height: 27rem
     }
-
     .lg\:h-\[28rem\] {
         height: 28rem
     }
-
     .lg\:h-\[30em\] {
         height: 30em
     }
-
     .lg\:h-\[34rem\] {
         height: 34rem
     }
-
     .lg\:h-\[35em\] {
         height: 35em
     }
-
     .lg\:h-\[40rem\] {
         height: 40rem
     }
-
     .lg\:h-\[45rem\] {
         height: 45rem
     }
-
     .lg\:h-\[6\.5rem\] {
         height: 6.5rem
     }
-
     .lg\:h-\[7rem\] {
         height: 7rem
     }
-
     .lg\:w-\[50\%\] {
         width: 50%
     }
-
     .lg\:w-\[60\%\] {
         width: 60%
     }
-
     .lg\:w-\[7rem\] {
         width: 7rem
     }
-
     .lg\:w-\[80\%\] {
         width: 80%
     }
-
     .lg\:translate-x-1\/3 {
         --tw-translate-x: 33.333333%;
         transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skew(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
     }
-
     .lg\:grid-cols-12 {
         grid-template-columns: repeat(12, minmax(0, 1fr))
     }
-
     .lg\:grid-cols-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr))
     }
-
     .lg\:grid-cols-3 {
         grid-template-columns: repeat(3, minmax(0, 1fr))
     }
-
     .lg\:grid-cols-5 {
         grid-template-columns: repeat(5, minmax(0, 1fr))
     }
-
     .lg\:flex-nowrap {
         flex-wrap: nowrap
     }
-
     .lg\:gap-\[5rem\] {
         gap: 5rem
     }
-
     .lg\:gap-x-\[6em\] {
         -moz-column-gap: 6em;
         column-gap: 6em
     }
-
     .lg\:gap-y-0 {
         row-gap: 0px
     }
-
     .lg\:gap-y-\[1\.5rem\] {
         row-gap: 1.5rem
     }
-
     .lg\:space-y-0>:not([hidden])~:not([hidden]) {
         --tw-space-y-reverse: 0;
         margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
         margin-bottom: calc(0px * var(--tw-space-y-reverse))
     }
-
     .lg\:rounded-3xl {
         border-radius: 1.5rem
     }
-
     .lg\:rounded-\[2\.5rem\] {
         border-radius: 2.5rem
     }
-
     .lg\:p-0 {
         padding: 0
     }
-
     .lg\:py-0 {
         padding-top: 0;
         padding-bottom: 0
     }
-
     .lg\:pb-6 {
         padding-bottom: 1.5rem
     }
-
     .lg\:pl-\[4em\] {
         padding-left: 4em
     }
-
     .lg\:pr-\[4em\] {
         padding-right: 4em
     }
-
     .lg\:text-\[1\.2em\] {
         font-size: 1.2em
     }
-
     .lg\:text-\[1\.3em\] {
         font-size: 1.3em
     }
-
     .lg\:text-\[1\.3rem\] {
         font-size: 1.3rem
     }
-
     .lg\:text-\[2\.8rem\] {
         font-size: 2.8rem
     }
-
     .lg\:text-\[2rem\] {
         font-size: 2rem
     }
-
     .lg\:font-\[500\] {
         font-weight: 500
     }
@@ -3499,7 +3416,6 @@ html[dir=ltr] ol {
     0% {
         transform: rotate(0)
     }
-
     to {
         transform: rotate(360deg)
     }
